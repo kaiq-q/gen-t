@@ -1,7 +1,12 @@
 package com.example.gent.views;
 
+import com.example.gent.service.CargaService;
 import com.example.gent.views.about.AboutView;
+import com.example.gent.views.carga.CargaView;
+import com.example.gent.views.cliente.ClienteView;
+import com.example.gent.views.funcionario.FuncionarioView;
 import com.example.gent.views.helloworld.HelloWorldView;
+import com.example.gent.views.home.HomeView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.Footer;
@@ -44,6 +49,7 @@ public class MainLayout extends AppLayout {
         Header header = new Header(appName);
 
         Scroller scroller = new Scroller(createNavigation());
+        CargaService service = new CargaService();
 
         addToDrawer(header, scroller, createFooter());
     }
@@ -51,7 +57,11 @@ public class MainLayout extends AppLayout {
     private SideNav createNavigation() {
         SideNav nav = new SideNav();
 
-        nav.addItem(new SideNavItem("Hello World", HelloWorldView.class, LineAwesomeIcon.GLOBE_SOLID.create()));
+
+        nav.addItem(new SideNavItem("Home", HomeView.class, LineAwesomeIcon.HOME_SOLID.create()));
+        nav.addItem(new SideNavItem("Clientes", ClienteView.class,LineAwesomeIcon.PEOPLE_CARRY_SOLID.create()));
+        nav.addItem(new SideNavItem("Funcionários", FuncionarioView.class,LineAwesomeIcon.USER.create()));
+        nav.addItem(new SideNavItem("Cargas", CargaView.class, LineAwesomeIcon.TRUCK_SOLID.create()));
         nav.addItem(new SideNavItem("About", AboutView.class, LineAwesomeIcon.FILE.create()));
 
         return nav;

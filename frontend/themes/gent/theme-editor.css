@@ -1,0 +1,8 @@
+/*
+ * This file has been created by the Vaadin Theme Editor. Please note that
+ * manual changes to individual CSS properties may be overwritten by the theme editor.
+ */
+vaadin-text-field::part(input-field) {
+  background-color:rgba(198,220,247,0.5);
+  border-color:rgba(24,38,56,0.06);
+}
