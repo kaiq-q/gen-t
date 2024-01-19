@@ -1,8 +1,9 @@
 package com.example.gent.service;
 
+import com.example.gent.dao.CargoDao;
 import com.example.gent.dao.FuncionarioDao;
+import com.example.gent.entity.Cargo;
 import com.example.gent.entity.Funcionario;
-import com.example.gent.entity.Pessoa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,12 @@ public class FuncionarioService {
 
     @Autowired
     FuncionarioDao funcionarioDao;
+
+    CargoDao cargoDao;
+
+    public FuncionarioService(CargoDao cargoDao){
+        this.cargoDao = cargoDao;
+    }
 
     public void saveFuncionario(Funcionario funcionario){
         if (funcionario == null){
@@ -53,6 +60,12 @@ public class FuncionarioService {
         funcionario.setStatus(false);
         funcionarioDao.save(funcionario);
 
+    }
+
+    public List<Cargo> findAllCargos(){
+        List<Cargo> cargoList = new ArrayList<>();
+        cargoDao.findAll().forEach(cargoList::add);
+        return cargoList;
     }
 
 }

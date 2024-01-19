@@ -89,7 +89,7 @@ public class FuncionarioView extends VerticalLayout {
     }
 
     public void configureForm(){
-        form = new FuncionarioForm();
+        form = new FuncionarioForm(funcionarioService.findAllCargos());
         form.setWidth("25em");
 
         form.addSaveListener(this::saveFuncionario);
@@ -114,7 +114,10 @@ public class FuncionarioView extends VerticalLayout {
     public void configureGrid(){
         grid.addClassName("funcionario-grid");
         grid.setSizeFull();
-        grid.setColumns("nome","sobrenome","dataNascimento", "cpf", "rg", "endereco", "cidade", "estado", "dataAdmissao", "dataDesligamento", "status");
+        grid.setColumns("nome","sobrenome");
+        grid.addColumn(funcionario -> funcionario.getCargo().getInfo()).setHeader("Cargo");
+        grid.addColumns("dataNascimento", "cpf", "rg", "endereco", "cidade", "estado", "dataAdmissao", "dataDesligamento", "status");
+
         grid.getColumns().forEach(funcionarioColumn -> funcionarioColumn.setAutoWidth(true));
 
         grid.asSingleSelect().addValueChangeListener(event -> editFuncionario(event.getValue()));

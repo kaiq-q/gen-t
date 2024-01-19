@@ -1,11 +1,14 @@
 package com.example.gent.views.funcionario.form;
 
+import com.example.gent.entity.Cargo;
 import com.example.gent.entity.Funcionario;
+import com.example.gent.service.CargoService;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -13,28 +16,32 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.shared.Registration;
 
+import java.util.List;
+
 public class FuncionarioForm extends FormLayout {
 
     TextField nome = new TextField("Nome");
     TextField sobrenome = new TextField("Sobrenome");
+    ComboBox<Cargo> cargo = new ComboBox<>("Cargo");
     DatePicker dataNascimento = new DatePicker("Data nascimento");
     TextField cpf = new TextField("C.P.F");
     TextField rg = new TextField("R.G");
     TextField endereco = new TextField("Endereço");
     TextField cidade = new TextField("Cidade");
     TextField estado = new TextField("Estato");
-
     Button save = new Button("Salvar");
     Button inativar = new Button("Inativar");
     Button close = new Button("Cancelar");
 
     BeanValidationBinder<Funcionario> binderFuncionario = new BeanValidationBinder<>(Funcionario.class);
 
-    public FuncionarioForm(){
+    public FuncionarioForm(List<Cargo> cargoList){
         addClassName("funcionario-form");
         customizeFields();
+        cargo.setItems(cargoList);
+        cargo.setItemLabelGenerator(Cargo::getInfo);
         binderFuncionario.bindInstanceFields(this);
-        add(nome,sobrenome,dataNascimento,cpf,rg,endereco,cidade,estado,createButtonLayout());
+        add(nome,sobrenome,cargo,dataNascimento,cpf,rg,endereco,cidade,estado,createButtonLayout());
     }
 
     public static abstract class FuncionarioFormEvent extends ComponentEvent<FuncionarioForm>{

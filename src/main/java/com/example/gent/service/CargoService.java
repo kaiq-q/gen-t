@@ -15,11 +15,13 @@ public class CargoService {
     @Autowired
     public CargoDao cargoDao;
 
+
     public void saveCargo(Cargo cargo){
         if (cargo == null){
             System.err.println("Cargo is null. Are you sure you have connected your form to the application?");
             return;
         }
+        cargo.setStatus(true);
         cargoDao.save(cargo);
     }
 
@@ -29,8 +31,8 @@ public class CargoService {
             cargoDao.findAll().forEach(cargoList::add);
             return cargoList;
         }else{
-            //return cargaDao.search(stringFilter);
-            return null;
+            return cargoDao.search(filter);
+
         }
     }
 

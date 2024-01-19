@@ -3,6 +3,7 @@ package com.example.gent.views;
 import com.example.gent.service.CargaService;
 import com.example.gent.views.about.AboutView;
 import com.example.gent.views.carga.CargaView;
+import com.example.gent.views.cargo.CargoView;
 import com.example.gent.views.cliente.ClienteView;
 import com.example.gent.views.funcionario.FuncionarioView;
 import com.example.gent.views.helloworld.HelloWorldView;
@@ -61,6 +62,7 @@ public class MainLayout extends AppLayout {
         nav.addItem(new SideNavItem("Home", HomeView.class, LineAwesomeIcon.HOME_SOLID.create()));
         nav.addItem(new SideNavItem("Clientes", ClienteView.class,LineAwesomeIcon.PEOPLE_CARRY_SOLID.create()));
         nav.addItem(new SideNavItem("Funcionários", FuncionarioView.class,LineAwesomeIcon.USER.create()));
+        nav.addItem(new SideNavItem("Cargos", CargoView.class,LineAwesomeIcon.BOX_SOLID.create()));
         nav.addItem(new SideNavItem("Cargas", CargaView.class, LineAwesomeIcon.TRUCK_SOLID.create()));
         nav.addItem(new SideNavItem("About", AboutView.class, LineAwesomeIcon.FILE.create()));
 
