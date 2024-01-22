@@ -1,8 +1,10 @@
 package com.example.gent.views.funcionario.form;
 
 import com.example.gent.entity.Cargo;
+import com.example.gent.entity.Endereco;
 import com.example.gent.entity.Funcionario;
 import com.example.gent.service.CargoService;
+import com.example.gent.service.webclient.CepService;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
@@ -15,6 +17,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.shared.Registration;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 
@@ -24,11 +27,14 @@ public class FuncionarioForm extends FormLayout {
     TextField sobrenome = new TextField("Sobrenome");
     ComboBox<Cargo> cargo = new ComboBox<>("Cargo");
     DatePicker dataNascimento = new DatePicker("Data nascimento");
-    TextField cpf = new TextField("C.P.F");
-    TextField rg = new TextField("R.G");
-    TextField endereco = new TextField("Endereço");
+    TextField cpf = new TextField("Cpf");
+    TextField rg = new TextField("Rg");
+    TextField cep = new TextField("Cep");
+    TextField logradouro = new TextField("Logradouro");
+    TextField bairro = new TextField("Bairro");
     TextField cidade = new TextField("Cidade");
     TextField estado = new TextField("Estato");
+
     Button save = new Button("Salvar");
     Button inativar = new Button("Inativar");
     Button close = new Button("Cancelar");
@@ -41,7 +47,8 @@ public class FuncionarioForm extends FormLayout {
         cargo.setItems(cargoList);
         cargo.setItemLabelGenerator(Cargo::getInfo);
         binderFuncionario.bindInstanceFields(this);
-        add(nome,sobrenome,cargo,dataNascimento,cpf,rg,endereco,cidade,estado,createButtonLayout());
+        enderecoFuncionarioBinder();
+        add(nome,sobrenome,cargo,dataNascimento,cpf,rg,cep,logradouro,bairro,cidade,estado,createButtonLayout());
     }
 
     public static abstract class FuncionarioFormEvent extends ComponentEvent<FuncionarioForm>{
@@ -129,4 +136,26 @@ public class FuncionarioForm extends FormLayout {
         cpf.setAllowedCharPattern("[0-9.-]");
         cpf.setMaxLength(14);
     }
+
+    public void enderecoFuncionarioBinder(){
+        binderFuncionario.bind(
+                cep,
+                pessoa -> pessoa.getEndereco() != null ? pessoa.getEndereco().getCep() : null,
+                (pessoa, cep) -> {
+                    if (pessoa.getEndereco() != null) {
+                        pessoa.getEndereco().setCep(cep);
+                    } else {
+                        // If endereco is null, create a new Endereco object
+                        Endereco endereco = new Endereco();
+                        endereco.setCep(cep);
+                        pessoa.setEndereco(endereco);
+                    }
+                }
+        );
+
+        binderFuncionario.bind(logradouro, pessoa -> pessoa.getEndereco().getLogradouro(), (pessoa, logradouro) -> pessoa.getEndereco().setLogradouro(logradouro));
+        binderFuncionario.bind(cidade, pessoa -> pessoa.getEndereco().getCidade(), (pessoa, cidade) -> pessoa.getEndereco().setCidade(cidade));
+        binderFuncionario.bind(bairro, pessoa -> pessoa.getEndereco().getBairro(), (pessoa, bairro) -> pessoa.getEndereco().setBairro(bairro));
+    }
+
 }

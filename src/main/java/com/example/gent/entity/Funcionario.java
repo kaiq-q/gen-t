@@ -19,10 +19,6 @@ public class Funcionario extends Pessoa{
     @JoinColumn(name = "cargo_id")
     private Cargo cargo;
 
-    public Funcionario(String nome, String sobrenome, Date dataNascimento, String cpf, String rg, String endereco, String cidade, String estado, Boolean status) {
-        super(nome, sobrenome, dataNascimento, cpf, rg, endereco, cidade, estado, status);
-    }
-
     public Funcionario(){
         super();
     }

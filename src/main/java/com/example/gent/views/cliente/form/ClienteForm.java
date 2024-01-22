@@ -1,6 +1,7 @@
 package com.example.gent.views.cliente.form;
 
 import com.example.gent.entity.Cliente;
+import com.example.gent.entity.Endereco;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
@@ -19,9 +20,11 @@ public class ClienteForm extends FormLayout{
     TextField nome = new TextField("Nome");
     TextField sobrenome = new TextField("Sobrenome");
     DatePicker dataNascimento = new DatePicker("Data nascimento");
-    TextField cpf = new TextField("C.P.F");
-    TextField rg = new TextField("R.G");
-    TextField endereco = new TextField("Endereço");
+    TextField cpf = new TextField("Cpf");
+    TextField rg = new TextField("Rg");
+    TextField cep = new TextField("Cep");
+    TextField logradouro = new TextField("Logradouro");
+    TextField bairro = new TextField("Bairro");
     TextField cidade = new TextField("Cidade");
     TextField estado = new TextField("Estato");
 
@@ -34,7 +37,8 @@ public class ClienteForm extends FormLayout{
     public ClienteForm(){
         addClassName("cliente-form");
         binderCliente.bindInstanceFields(this);
-        add(nome,sobrenome,dataNascimento,cpf,rg,endereco,cidade,estado,createButtonLayout());
+        enderecoClienteBinder();
+        add(nome,sobrenome,dataNascimento,cpf,rg,cep,logradouro,bairro,cidade,estado,createButtonLayout());
     }
 
     public static abstract class ClienteFormEvent extends ComponentEvent<ClienteForm>{
@@ -112,5 +116,27 @@ public class ClienteForm extends FormLayout{
         if(binderCliente.isValid()){
             fireEvent(new SaveEvent(this,binderCliente.getBean()));
         }
+    }
+
+    public void enderecoClienteBinder(){
+        binderCliente.bind(
+                cep,
+                pessoa -> pessoa.getEndereco() != null ? pessoa.getEndereco().getCep() : null,
+                (pessoa, cep) -> {
+                    if (pessoa.getEndereco() != null) {
+                        pessoa.getEndereco().setCep(cep);
+                    } else {
+                        // If endereco is null, create a new Endereco object
+                        Endereco endereco = new Endereco();
+                        endereco.setCep(cep);
+                        pessoa.setEndereco(endereco);
+                    }
+                }
+        );
+
+        binderCliente.bind(logradouro, pessoa -> pessoa.getEndereco().getLogradouro(), (pessoa, logradouro) -> pessoa.getEndereco().setLogradouro(logradouro));
+        binderCliente.bind(cidade, pessoa -> pessoa.getEndereco().getCidade(), (pessoa, cidade) -> pessoa.getEndereco().setCidade(cidade));
+        binderCliente.bind(estado, pessoa -> pessoa.getEndereco().getEstado(), (pessoa, estado) -> pessoa.getEndereco().setEstado(estado));
+        binderCliente.bind(bairro, pessoa -> pessoa.getEndereco().getBairro(), (pessoa, bairro) -> pessoa.getEndereco().setBairro(bairro));
     }
 }

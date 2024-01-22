@@ -43,7 +43,12 @@ public class FuncionarioView extends VerticalLayout {
     }
 
     private void saveFuncionario(FuncionarioForm.SaveEvent saveEvent){
-        funcionarioService.saveFuncionario(saveEvent.getFuncionario());
+
+        if (saveEvent.getFuncionario().getId() == null){
+            funcionarioService.saveFuncionario(saveEvent.getFuncionario());
+        }else{
+            funcionarioService.updateFuncionatio(saveEvent.getFuncionario());
+        }
         updateList();
         closeEditor();
     }
@@ -116,7 +121,7 @@ public class FuncionarioView extends VerticalLayout {
         grid.setSizeFull();
         grid.setColumns("nome","sobrenome");
         grid.addColumn(funcionario -> funcionario.getCargo().getInfo()).setHeader("Cargo");
-        grid.addColumns("dataNascimento", "cpf", "rg", "endereco", "cidade", "estado", "dataAdmissao", "dataDesligamento", "status");
+        grid.addColumns("dataNascimento", "cpf", "rg", "dataAdmissao", "dataDesligamento", "status");
 
         grid.getColumns().forEach(funcionarioColumn -> funcionarioColumn.setAutoWidth(true));
 

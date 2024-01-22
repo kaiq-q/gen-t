@@ -17,26 +17,11 @@ public class Pessoa {
     private Date dataNascimento;
     private String cpf;
     private String rg;
-    private String endereco;
-    private String cidade;
-    private String estado;
-
+    @ManyToOne
+    @JoinColumn(name = "endereco_id")
+    private Endereco endereco;
     private Boolean status;
-
-
-
-    public Pessoa(String nome, String sobrenome, Date dataNascimento, String cpf, String rg, String endereco, String cidade, String estado, Boolean status) {
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.dataNascimento = dataNascimento;
-        this.cpf = cpf;
-        this.rg = rg;
-        this.endereco = endereco;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.status = status;
-    }
-
+    
     public Pessoa() {
 
     }
@@ -84,36 +69,20 @@ public class Pessoa {
         this.rg = rg;
     }
 
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
     public Boolean getStatus(){
         return status;
     }
 
     public void setStatus(Boolean status){
         this.status = status;
+    }
+
+    public Endereco getEndereco(){
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco){
+        this.endereco = endereco;
     }
 
     public String getFormattedCpf(){

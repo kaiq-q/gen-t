@@ -43,6 +43,12 @@ public class ClienteView extends VerticalLayout {
     }
 
     private void saveCliente(ClienteForm.SaveEvent saveEvent){
+
+        if (saveEvent.getCliente().getId() == null){
+            clienteService.saveCliente(saveEvent.getCliente());
+        }else{
+            clienteService.updateCliente(saveEvent.getCliente());
+        }
         clienteService.saveCliente(saveEvent.getCliente());
         updateList();
         closeEditor();
@@ -108,7 +114,7 @@ public class ClienteView extends VerticalLayout {
     public void configureGrid(){
         grid.addClassName("cliente-grid");
         grid.setSizeFull();
-        grid.setColumns("nome","sobrenome","dataNascimento", "cpf", "rg", "endereco", "cidade", "estado", "ultimoServico", "dataCadastro", "status");
+        grid.setColumns("nome","sobrenome","dataNascimento", "cpf", "rg", "ultimoServico", "dataCadastro", "status");
         grid.getColumns().forEach(clienteColumn -> clienteColumn.setAutoWidth(true));
 
         grid.asSingleSelect().addValueChangeListener(event -> editCliente(event.getValue()));

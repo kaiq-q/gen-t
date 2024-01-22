@@ -16,10 +16,6 @@ public class Cliente extends Pessoa{
 
     private Date dataCadastro;
 
-    public Cliente(String nome, String sobrenome, Date dataNascimento, String cpf, String rg, String endereco, String cidade, String estado, Boolean status) {
-        super(nome, sobrenome, dataNascimento, cpf, rg, endereco, cidade, estado, status);
-    }
-
     public Cliente() {
         super();
     }

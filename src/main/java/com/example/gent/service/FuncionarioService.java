@@ -1,6 +1,7 @@
 package com.example.gent.service;
 
 import com.example.gent.dao.CargoDao;
+import com.example.gent.dao.EnderecoDao;
 import com.example.gent.dao.FuncionarioDao;
 import com.example.gent.entity.Cargo;
 import com.example.gent.entity.Funcionario;
@@ -21,8 +22,11 @@ public class FuncionarioService {
 
     CargoDao cargoDao;
 
-    public FuncionarioService(CargoDao cargoDao){
+    EnderecoDao enderecoDao;
+
+    public FuncionarioService(CargoDao cargoDao, EnderecoDao enderecoDao){
         this.cargoDao = cargoDao;
+        this.enderecoDao = enderecoDao;
     }
 
     public void saveFuncionario(Funcionario funcionario){
@@ -32,7 +36,9 @@ public class FuncionarioService {
         }
         funcionario.setStatus(true);
         funcionario.setDataAdmissao(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        enderecoDao.save(funcionario.getEndereco());
         funcionarioDao.save(funcionario);
+
     }
 
     //Overload methods
