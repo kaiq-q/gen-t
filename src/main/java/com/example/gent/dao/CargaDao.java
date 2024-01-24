@@ -13,10 +13,5 @@ import java.util.List;
 @Transactional
 public interface CargaDao extends CrudRepository<Carga, Integer> {
 
-    @Query("select c from Carga c " +
-            "where lower(c.cargaDestino) like lower(concat('%', :searchTerm, '%')) " +
-            "or lower(c.cargaOrigem) like lower(concat('%', :searchTerm, '%'))")
-    List<Carga> search(@Param("searchTerm") String searchTerm);
-
 
 }

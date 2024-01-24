@@ -11,10 +11,10 @@ public class Funcionario extends Pessoa{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    
     private Date dataAdmissao;
-
     private Date dataDesligamento;
+
     @ManyToOne
     @JoinColumn(name = "cargo_id")
     private Cargo cargo;

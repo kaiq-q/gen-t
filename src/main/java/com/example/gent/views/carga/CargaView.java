@@ -38,12 +38,12 @@ public class CargaView extends VerticalLayout {
     }
 
     private void deleteCarga(CargaForm.DeleteEvent deleteEvent){
-        cargaService.deleteCarga(deleteEvent.getCarga().getCardaId());
+        //cargaService.deleteCarga(deleteEvent.getCarga().getCardaId());
         updateList();
         closeEditor();
     }
     private void saveCarga(CargaForm.SaveEvent saveEvent){
-        cargaService.saveCarga(saveEvent.getCarga());
+        //cargaService.saveCarga(saveEvent.getCarga());
         updateList();
         closeEditor();
     }
@@ -69,7 +69,7 @@ public class CargaView extends VerticalLayout {
         }
     }
     private void updateList() {
-        grid.setItems(cargaService.getCargas(filterText.getValue()));
+        //grid.setItems(cargaService.getCargas(filterText.getValue()));
     }
 
     public HorizontalLayout getContent(){
@@ -111,7 +111,7 @@ public class CargaView extends VerticalLayout {
 
 
         grid.setSizeFull();
-        grid.setColumns("cargaDestino", "cargaOrigem", "cargaValor", "dataEntrega");
+        //grid.setColumns("cargaDestino", "cargaOrigem", "cargaValor", "dataEntrega");
         //grid.addColumn(carga -> contact.getStatus().getName()).setHeader("Status");
         //grid.addColumn(carga -> contact.getCompany().getName()).setHeader("Company");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
