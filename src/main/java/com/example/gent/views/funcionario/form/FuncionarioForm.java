@@ -3,8 +3,6 @@ package com.example.gent.views.funcionario.form;
 import com.example.gent.entity.Cargo;
 import com.example.gent.entity.Endereco;
 import com.example.gent.entity.Funcionario;
-import com.example.gent.service.CargoService;
-import com.example.gent.service.webclient.CepService;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
@@ -17,7 +15,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.shared.Registration;
-import org.springframework.web.reactive.function.client.WebClient;
+
 
 import java.util.List;
 
@@ -34,6 +32,8 @@ public class FuncionarioForm extends FormLayout {
     TextField bairro = new TextField("Bairro");
     TextField cidade = new TextField("Cidade");
     TextField estado = new TextField("Estato");
+
+
 
     Button save = new Button("Salvar");
     Button inativar = new Button("Inativar");
@@ -156,6 +156,7 @@ public class FuncionarioForm extends FormLayout {
         binderFuncionario.bind(logradouro, pessoa -> pessoa.getEndereco().getLogradouro(), (pessoa, logradouro) -> pessoa.getEndereco().setLogradouro(logradouro));
         binderFuncionario.bind(cidade, pessoa -> pessoa.getEndereco().getCidade(), (pessoa, cidade) -> pessoa.getEndereco().setCidade(cidade));
         binderFuncionario.bind(bairro, pessoa -> pessoa.getEndereco().getBairro(), (pessoa, bairro) -> pessoa.getEndereco().setBairro(bairro));
+        binderFuncionario.bind(estado, pessoa -> pessoa.getEndereco().getEstado(), (pessoa, estado) -> pessoa.getEndereco().setEstado(estado));
     }
 
 }

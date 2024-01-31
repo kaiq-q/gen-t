@@ -74,4 +74,14 @@ public class FuncionarioService {
         return cargoList;
     }
 
+    public List<Funcionario> getFuncionarioByCargo(Integer cargoId){
+        if (cargoId == 1){
+            return new ArrayList<>(funcionarioDao.findAllMotorista(cargoId));
+        } else if (cargoId == 2) {
+            return new ArrayList<>(funcionarioDao.findAllAjudante(cargoId));
+        }else{
+            return null;
+        }
+    }
+
 }

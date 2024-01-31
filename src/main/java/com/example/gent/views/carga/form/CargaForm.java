@@ -1,12 +1,20 @@
 package com.example.gent.views.carga.form;
 
 import com.example.gent.entity.Carga;
+import com.example.gent.entity.Cargo;
+import com.example.gent.entity.Cliente;
+import com.example.gent.entity.Funcionario;
+import com.example.gent.entity.auxiliary.CargaFuncionario;
+import com.example.gent.enums.StatusCarga;
+import com.example.gent.service.ClienteService;
+import com.example.gent.service.FuncionarioService;
 import com.vaadin.componentfactory.addons.inputmask.InputMask;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
@@ -16,14 +24,26 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.shared.Registration;
 
+import java.util.List;
+
 public class CargaForm extends FormLayout{
 
-    TextField cargaDestino = new TextField("Carga destino");
-
-    TextField cargaOrigem = new TextField("Carga origem");
 
     NumberField cargaValor = new NumberField("Valor");
     DatePicker dataEntrega = new DatePicker("Data entrega");
+
+    TextField enderecoOrigem = new TextField("Origem");
+    TextField enderecoDestino = new TextField("Destino");
+
+    ComboBox<CargaFuncionario> funcionarios = new ComboBox<>("Motorista");
+
+    ComboBox<StatusCarga> statusCarga = new ComboBox<>();
+
+    ComboBox<Cliente> cliente = new ComboBox<>("Cliente");
+
+    FuncionarioService funcionarioService;
+
+    ClienteService clienteService;
 
     Button save = new Button("Salvar");
     Button delete = new Button("Deletar");
@@ -32,11 +52,15 @@ public class CargaForm extends FormLayout{
     BeanValidationBinder<Carga> binder = new BeanValidationBinder<>(Carga.class);
 
 
-    public CargaForm() {
+    public CargaForm(FuncionarioService funcionarioService, ClienteService clienteService) {
+        this.funcionarioService = funcionarioService;
+        this.clienteService = clienteService;
         addClassName("carga-form");
-        binder.bindInstanceFields(this);
+
+        //binder.bindInstanceFields(this);
+        cargaBinder();
         customizeFields();
-        add(cargaDestino,cargaOrigem, cargaValor, dataEntrega, createButtonsLayout());
+        add(enderecoOrigem, enderecoDestino, cargaValor, dataEntrega, funcionarios, cliente, createButtonsLayout());
 
     }
 
@@ -121,6 +145,16 @@ public class CargaForm extends FormLayout{
         Div brSuffix = new Div();
         brSuffix.setText("R$");
         cargaValor.setPrefixComponent(brSuffix);
+    }
+
+    public void cargaBinder(){
+        binder.forField(cargaValor).bind("cargaValor");
+        binder.forField(dataEntrega).bind("dataEntrega");
+        binder.forField(enderecoOrigem).bind("enderecoOrigem");
+        binder.forField(enderecoDestino).bind("enderecoDestino");
+        binder.forField(funcionarios).bind("funcionarios");
+        binder.forField(cliente).bind("cliente");
+        binder.forField(statusCarga).bind("statusCarga");
     }
 
 }

@@ -19,4 +19,14 @@ public interface FuncionarioDao extends CrudRepository<Funcionario, Integer> {
             "OR LOWER(f.sobrenome) LIKE LOWER(CONCAT('%', :searchTerm, '%'))")
     List<Funcionario> findByName(@Param("searchTerm") String searchTerm);
 
+    @Query("SELECT f FROM Funcionario f "+
+           "WHERE f.cargo.id = :searchTerm"
+    )
+    List<Funcionario> findAllMotorista(@Param("searchTerm") Integer searchTerm);
+
+    @Query("SELECT f FROM Funcionario f "+
+            "WHERE f.cargo.id = :searchTerm"
+    )
+    List<Funcionario> findAllAjudante(@Param("searchTerm") Integer searchTerm);
+
 }

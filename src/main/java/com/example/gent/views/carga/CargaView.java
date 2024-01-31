@@ -3,6 +3,8 @@ package com.example.gent.views.carga;
 import com.example.gent.entity.Carga;
 import com.example.gent.service.CargaService;
 
+import com.example.gent.service.ClienteService;
+import com.example.gent.service.FuncionarioService;
 import com.example.gent.views.MainLayout;
 import com.example.gent.views.carga.form.CargaForm;
 import com.vaadin.flow.component.button.Button;
@@ -24,8 +26,14 @@ public class CargaView extends VerticalLayout {
 
     CargaService cargaService;
 
-    public CargaView(CargaService cargaService) {
+    ClienteService clienteService;
+
+    FuncionarioService funcionarioService;
+
+    public CargaView(CargaService cargaService, FuncionarioService funcionarioService, ClienteService clienteService) {
         this.cargaService = cargaService;
+        this.funcionarioService = funcionarioService;
+        this.clienteService = clienteService;
         addClassName("carga-view");
         setSizeFull();
         configureGrid();
@@ -38,12 +46,12 @@ public class CargaView extends VerticalLayout {
     }
 
     private void deleteCarga(CargaForm.DeleteEvent deleteEvent){
-        //cargaService.deleteCarga(deleteEvent.getCarga().getCardaId());
+        cargaService.deleteCarga(deleteEvent.getCarga().getId());
         updateList();
         closeEditor();
     }
     private void saveCarga(CargaForm.SaveEvent saveEvent){
-        //cargaService.saveCarga(saveEvent.getCarga());
+        cargaService.saveCarga(saveEvent.getCarga());
         updateList();
         closeEditor();
     }
@@ -69,7 +77,7 @@ public class CargaView extends VerticalLayout {
         }
     }
     private void updateList() {
-        //grid.setItems(cargaService.getCargas(filterText.getValue()));
+        grid.setItems(cargaService.getCargas(filterText.getValue()));
     }
 
     public HorizontalLayout getContent(){
@@ -82,7 +90,7 @@ public class CargaView extends VerticalLayout {
     }
 
     private void configureForm() {
-        form = new CargaForm();
+        form = new CargaForm(funcionarioService,clienteService);
         form.setWidth("25em");
 
         form.addSaveListener(this::saveCarga);
@@ -99,6 +107,7 @@ public class CargaView extends VerticalLayout {
         filterText.addValueChangeListener(e -> updateList());
 
         Button addCargaButton = new Button("Add carga");
+
         addCargaButton.addClickListener(event -> addCarga());
 
         var toolbar = new HorizontalLayout(filterText, addCargaButton);
@@ -110,13 +119,13 @@ public class CargaView extends VerticalLayout {
         grid.addClassNames("contact-grid");
 
 
-        grid.setSizeFull();
-        //grid.setColumns("cargaDestino", "cargaOrigem", "cargaValor", "dataEntrega");
+       grid.setSizeFull();
+       //grid.setColumns("cargaDestino", "cargaOrigem", "cargaValor", "dataEntrega");
         //grid.addColumn(carga -> contact.getStatus().getName()).setHeader("Status");
         //grid.addColumn(carga -> contact.getCompany().getName()).setHeader("Company");
-        grid.getColumns().forEach(col -> col.setAutoWidth(true));
+        //grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
-        grid.asSingleSelect().addValueChangeListener(event -> editCarga(event.getValue()));
+        //grid.asSingleSelect().addValueChangeListener(event -> editCarga(event.getValue()));
 
     }
 }

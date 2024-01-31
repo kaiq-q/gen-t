@@ -27,10 +27,6 @@ public class Carga {
         @JoinColumn(name = "cliente_id")
         private Cliente cliente;
 
-        @ManyToOne
-        @JoinColumn(name = "funcionario_motorista_id",referencedColumnName = "id")
-        private Funcionario motorista;
-
         @OneToMany
         @JoinTable(name = "CargaFuncionario",
                    joinColumns = @JoinColumn(name = "id"),
@@ -47,5 +43,68 @@ public class Carga {
                 this.funcionarios = new ArrayList<>();
         }
 
+        public Integer getId() {
+                return id;
+        }
+
+        public void setId(Integer id) {
+                this.id = id;
+        }
+
+        public Endereco getEnderecoOrigem() {
+                return enderecoOrigem;
+        }
+
+        public void setEnderecoOrigem(Endereco enderecoOrigem) {
+                this.enderecoOrigem = enderecoOrigem;
+        }
+
+        public Endereco getEnderecoDestino() {
+                return enderecoDestino;
+        }
+
+        public void setEnderecoDestino(Endereco enderecoDestino) {
+                this.enderecoDestino = enderecoDestino;
+        }
+
+        public Cliente getCliente() {
+                return cliente;
+        }
+
+        public void setCliente(Cliente cliente) {
+                this.cliente = cliente;
+        }
+
+        public List<CargaFuncionario> getFuncionarios() {
+                return funcionarios;
+        }
+
+        public void setFuncionarios(List<CargaFuncionario> funcionarios) {
+                this.funcionarios = funcionarios;
+        }
+
+        public StatusCarga getStatusCarga() {
+                return statusCarga;
+        }
+
+        public void setStatusCarga(StatusCarga statusCarga) {
+                this.statusCarga = statusCarga;
+        }
+
+        public double getCargaValor() {
+                return cargaValor;
+        }
+
+        public void setCargaValor(double cargaValor) {
+                this.cargaValor = cargaValor;
+        }
+
+        public Date getDataEntrega() {
+                return dataEntrega;
+        }
+
+        public void setDataEntrega(Date dataEntrega) {
+                this.dataEntrega = dataEntrega;
+        }
 }
 
