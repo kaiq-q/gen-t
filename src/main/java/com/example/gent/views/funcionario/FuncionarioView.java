@@ -129,6 +129,7 @@ public class FuncionarioView extends VerticalLayout {
         grid.asSingleSelect().addValueChangeListener(event -> editFuncionario(event.getValue()));
     }
 
+
     private void openCustomForm(){
         FunForm testform = new FunForm();
 
@@ -138,5 +139,4 @@ public class FuncionarioView extends VerticalLayout {
         dialog.open();
 
     }
-
 }

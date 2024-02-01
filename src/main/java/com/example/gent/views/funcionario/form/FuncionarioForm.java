@@ -33,8 +33,6 @@ public class FuncionarioForm extends FormLayout {
     TextField cidade = new TextField("Cidade");
     TextField estado = new TextField("Estato");
 
-
-
     Button save = new Button("Salvar");
     Button inativar = new Button("Inativar");
     Button close = new Button("Cancelar");
